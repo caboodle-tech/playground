@@ -1,28 +1,28 @@
 input,
 button {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #333;
-  outline: none;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
 }
 
 input#server-ip {
-  width: 300px; /* Adjust width for IP address input */
+    width: 300px;
 }
 
 button {
-  background-color: #4caf50; /* Green button color */
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 }
 
 button:hover {
-  background-color: #388e3c; /* Darker green on hover */
+    background-color: #388e3c;
 }
 
 button:active {
-  transform: translateY(1px); /* Subtle press effect */
+    transform: translateY(1px);
 }
