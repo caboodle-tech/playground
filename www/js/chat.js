@@ -11,6 +11,8 @@ class ChatController {
         loginServer: null
     }
 
+    #username = '';
+
     #ws = null;
 
     constructor() {
@@ -34,6 +36,7 @@ class ChatController {
         this.#elem.loginServer = document.getElementById('login-server');
 
         if (name && ip) {
+            this.#username = name;
             this.#elem.loginName.value = name;
             this.#elem.loginServer.value = ip;
             this.#elem.loginForm.style.display = 'none';
@@ -54,21 +57,6 @@ class ChatController {
 
         this.#elem.loginButton.addEventListener('click', this.#saveCredentials.bind(this));
         this.#elem.chatButton.addEventListener('click', this.#sendMessage.bind(this));
-    }
-
-    #sendMessage() {
-        const msg = this.#elem.chatInput.value.trim();
-        if (msg.length < 1) {
-            return;
-        }
-
-        const msgObject = {
-            message: msg,
-            route: 'chat',
-            type: 'string'
-        };
-
-        this.#ws.send(JSON.stringify(msgObject));
     }
 
     #saveCredentials() {
@@ -93,8 +81,55 @@ class ChatController {
         };
     }
 
-    #updateChats(history) {
-        console.log(history);
+    #sendMessage() {
+        const msg = this.#elem.chatInput.value.trim();
+        if (msg.length < 1) {
+            return;
+        }
+
+        const msgObject = {
+            message: msg,
+            route: 'chat',
+            userId: this.simpleHash(this.#ws.url),
+            userName: this.#username,
+            type: 'string'
+        };
+
+        this.#ws.send(JSON.stringify(msgObject));
+        this.#elem.chatInput.value = '';
+    }
+
+    // https://gist.github.com/jlevy/c246006675becc446360a798e2b2d781
+    simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = (hash << 5) - hash + char;
+            hash &= hash; // Convert to 32bit integer
+        }
+        return new Uint32Array([hash])[0].toString(36);
+    }
+
+    #updateChats(rawMessage) {
+        const history = JSON.parse(rawMessage.data).message;
+        let newHtml = '';
+        history.forEach((record) => {
+            newHtml += `
+                <div class="message-wrapper">
+                    <div class="message">
+                        ${record.message}
+                    </div>
+                    <div class="from">
+                        ${record.from}
+                    </div>
+                </div>
+            `;
+        });
+        this.#elem.chatDisplay.innerHTML = newHtml;
+    }
+
+    whoAmI() {
+        return this.simpleHash(this.#ws.url);
     }
 
 }
