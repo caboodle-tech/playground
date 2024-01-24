@@ -51,6 +51,8 @@ class ChatController {
             };
 
             socket.onopen = () => {
+                this.#elem.loginForm.style.display = 'none';
+                this.#elem.chatApp.style.display = 'block';
                 this.#ws = socket;
                 this.getUpdates();
             };
@@ -87,6 +89,8 @@ class ChatController {
         };
 
         socket.onopen = () => {
+            this.#elem.loginForm.style.display = 'none';
+            this.#elem.chatApp.style.display = 'block';
             localStorage.setItem('loginName', name);
             localStorage.setItem('loginServer', server);
             this.#ws = socket;
