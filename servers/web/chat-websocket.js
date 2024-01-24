@@ -13,6 +13,12 @@ class ChatWebsocket {
     websocketListener(msgObj, pageId, socket) {
         this.#sockets[msgObj.userId] = socket;
 
+        // Provide the history for this new connection but do not notify everyone else.
+        if (!msgObj.message) {
+            socket.send(this.#history);
+            return;
+        }
+        
         this.#updateHistory({
             from: msgObj.userName,
             message: msgObj.message,

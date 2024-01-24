@@ -52,11 +52,24 @@ class ChatController {
 
             socket.onopen = () => {
                 this.#ws = socket;
+                this.getUpdates();
             };
         }
 
         this.#elem.loginButton.addEventListener('click', this.#saveCredentials.bind(this));
         this.#elem.chatButton.addEventListener('click', this.#sendMessage.bind(this));
+    }
+
+    getUpdates() {
+        const msgObject = {
+            message: null,
+            route: 'chat',
+            userId: this.simpleHash(window.location.href),
+            userName: this.#username,
+            type: 'string'
+        };
+
+        this.#ws.send(JSON.stringify(msgObject));
     }
 
     #saveCredentials() {
@@ -77,7 +90,7 @@ class ChatController {
             localStorage.setItem('loginName', name);
             localStorage.setItem('loginServer', server);
             this.#ws = socket;
-            console.log(socket);
+            this.getUpdates();
         };
     }
 
@@ -90,7 +103,7 @@ class ChatController {
         const msgObject = {
             message: msg,
             route: 'chat',
-            userId: this.simpleHash(this.#ws.url),
+            userId: this.simpleHash(window.location.href),
             userName: this.#username,
             type: 'string'
         };
@@ -129,7 +142,7 @@ class ChatController {
     }
 
     whoAmI() {
-        return this.simpleHash(this.#ws.url);
+        return this.simpleHash(window.location.href);
     }
 
 }
