@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@caboodle-tech/node-simple-server": "^4.2.1",
+    "sqlite3": "^5.1.7"
+  },
+  "scripts": {
+    "watch": "node ./servers/web/web-server.js "
+  },
+  "type": "module"
+}

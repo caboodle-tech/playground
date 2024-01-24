@@ -1,0 +1,80 @@
+#sql-textarea {
+    width: calc(100% - 3rem); /* Fill available width in its container accounting for weird padding */
+    min-height: 50px; /* Minimum height of 50px */
+    border: 1px solid #ddd; /* Simple border */
+    border-radius: 4px; /* Subtle rounded corners */
+    padding: 1rem; /* Text padding */
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    resize: vertical; /* Allow vertical resizing */
+  }
+  
+  #sql-run, #sql-clear {
+    display: inline-block; /* Button display style */
+    padding: 0.5rem 1rem; /* Button padding */
+    border: none; /* Remove default button border */
+    border-radius: 4px; /* Match textarea corners */
+    font-size: 16px; /* Button font size */
+    font-weight: 500; /* Medium font weight */
+    cursor: pointer; /* Show clickable cursor */
+    background-color: #150076;
+    color: #fff; /* White text */
+    margin-right: 1rem; /* Space between buttons */
+  }
+  
+  #sql-run:hover, #sql-clear:hover {
+    background-color: #4800CD; /* Hover color variation */
+  }
+  
+  #sql-results {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fafafa; /* Very light gray background */
+    min-height: 100px; /* Minimum height for results */
+  }
+
+  #sql-history {
+    max-height: 195px; /* Limit height to 300px */
+    overflow-y: auto; /* Enable vertical scrolling when content exceeds height */
+  }
+  
+
+  .sql-history-record {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem; /* Spacing between records */
+    background-color: #f0f0f0; /* Light gray background */
+    cursor: pointer; /* Show clickable cursor */
+    /* Optional card-like effect */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sql-history-record:hover {
+    background-color: #e0e0e0; /* Slightly darker background on hover */
+  }
+  
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+    font-family: sans-serif;
+  }
+  
+  th, td {
+    padding: 0.8rem;
+    text-align: left;
+    border: 1px solid #2d2d2d;
+  }
+  
+  th {
+    background-color: #9e9e9e; /* Distinctive grey header background */
+    color: #000000; /* White text for contrast */
+    font-weight: bold;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f3f1f1;
+  }

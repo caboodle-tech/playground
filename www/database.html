@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Database Demo</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/database.css">
+    <script src="./js/database.js"></script>
+</head>
+<body>
+    <header>
+        <div class="content">
+            <a href="index.html">
+                <img src="./imgs/byui-logo.jpg" class="logo">
+            </a>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="database.html">SQL Murder Mystery</a>
+                    </li>
+                    <li>
+                        <a href="gallery.html">Picture Gallery</a>
+                    </li>
+                    <li>
+                        <a href="chat.html">Chat With The Class</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="content">
+            <h1>SQL Murder Mystery</h1>
+            <img src="./imgs/database/clue-illustration.png" class="fill">
+            <p>
+                The SQL Murder Mystery is designed to be both a self-directed lesson to learn SQL concepts and commands and a fun game for experienced SQL users to solve an intriguing crime. This demo was created by <a href="https://github.com/NUKnightLab" target="_blank">KnightLab</a> and is <a href="https://github.com/NUKnightLab/sql-mysteries" target="_blank">available on GitHub</a>.
+            </p>
+        </div>
+        <div class="content">
+            <hr>
+            <p>
+                A crime has taken place and the detective needs your help. The detective gave you the crime scene report, but you somehow lost it. You vaguely remember that the crime was a <strong>murder</strong> that occurred sometime on <strong>Jan.15, 2018</strong> and that it took place in <strong>SQL City</strong>. Start by retrieving the corresponding crime scene report from the police department's database.
+            </p>
+            <p>
+                All the clues to this mystery are buried in a huge database, and you need to use SQL to navigate through this vast network of information. Your first step to solving the mystery is to retrieve the corresponding crime scene report from the police department's
+                database. <strong>Hint:</strong> Do you remember how to print the structure of a database and its tables? Keep in mind SQLite is a little different.
+            </p>
+            <p>
+                <strong>Note:</strong> To check if you have the correct answer will require 2 separate SQL commands. The first should insert your guess to the solution table and the second should select just the value from that table.
+            </p>
+        </div>
+        <div class="content">
+            <div class="row">
+                <div class="column">
+                    <div class="title">
+                        Query SQL City Police Database
+                    </div>
+                    <textarea id="sql-textarea"></textarea>
+                    <button id="sql-run">Run</button>
+                    <button id="sql-clear">Clear</button>
+                </div>
+                <div class="column">
+                    <div class="title">
+                        Query History
+                    </div>
+                    <div id="sql-history">
+                        <div class="sql-history-record">
+                            Coming Soon!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sql-results"></div>
+        </div>
+    </main>
+    <footer>
+        <div class="content">
+            Made with <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg> by Caboodle Tech
+        </div>
+    </footer>
+</body>
+</html>
