@@ -9,10 +9,7 @@
     transition: height 0.3s ease;
 }
 
-.accordion>input[type="checkbox"]:checked~.content {
-    height: auto;
-    overflow: visible;
-}
+.accordion>input[type="checkbox"]:checked~.content {}
 
 .accordion label {
     display: block;
@@ -22,11 +19,7 @@
     margin-bottom: 1em;
 }
 
-.accordion>input[type="checkbox"]:checked~.content {
-    padding: 15px;
-    border: 1px solid #e8e8e8;
-    border-top: 0;
-}
+.accordion>input[type="checkbox"]:checked~.content {}
 
 .accordion .handle {
     margin: 0;

@@ -1,5 +1,6 @@
 class DatabaseConnector {
 
+    // HTML elements used by the database connector
     elem = {
         clear: null,
         history: null,
@@ -8,6 +9,10 @@ class DatabaseConnector {
         textarea: null
     }
 
+    /**
+     * Constructor for the DatabaseConnector class.
+     * Registers event listeners and initializes HTML elements when the DOM is loaded.
+     */
     constructor() {
         document.addEventListener("DOMContentLoaded", () => {
             NSS_WS.registerCallback(this.#response.bind(this));
@@ -15,6 +20,11 @@ class DatabaseConnector {
         });
     }
 
+    /**
+     * Adds a SQL query to the history section with double-click functionality.
+     * @private
+     * @param {string} sql - The SQL query to be added to the history.
+     */
     #addToHistory(sql) {
         const record = document.createElement('div');
         record.classList.add('sql-history-record');
@@ -25,9 +35,13 @@ class DatabaseConnector {
             this.elem.run.click();
         });
 
-        this.elem.history.prepend(record);
+        
     }
 
+    /**
+     * Clears the SQL textarea and results section.
+     * @private
+     */
     #clearSql() {
         if (this.elem.textarea) {
             this.elem.textarea.value = '';
@@ -37,6 +51,10 @@ class DatabaseConnector {
         }
     }
 
+    /**
+     * Connects HTML elements to corresponding properties and adds event listeners.
+     * @private
+     */
     #connectHtmlElements() {
         this.elem.clear = document.getElementById('sql-clear');
         this.elem.history = document.getElementById('sql-history');
@@ -48,12 +66,18 @@ class DatabaseConnector {
         this.elem.run.addEventListener('click', this.#runSql.bind(this));
     }
 
+    /**
+     * Generates the table header for a given array of objects.
+     * @private
+     * @param {Array} arr - The array of objects for which to generate the table header.
+     * @return {string} - The HTML string representing the table header.
+     */
     #getTableHeader(arr) {
-        if(this.whatIs(arr) != 'array') {
+        if(this.whatIs(arr) !== 'array') {
             return '';
         }
 
-        if(this.whatIs(arr[0]) != 'object') {
+        if(this.whatIs(arr[0]) !== 'object') {
             return '';
         }
 
@@ -66,6 +90,12 @@ class DatabaseConnector {
         return head;
     }
 
+    /**
+     * Handles the response received from the WebSocket server.
+     * Updates the results section with the query results or error message.
+     * @private
+     * @param {Object} msgObj - The WebSocket message object.
+     */
     #response(msgObj) {
         this.elem.results.classList.remove('error');
 
@@ -89,6 +119,11 @@ class DatabaseConnector {
         this.elem.results.innerHTML = table;
     }
 
+    /**
+     * Runs the SQL query entered in the textarea.
+     * Adds the query to the history and sends it to the server.
+     * @private
+     */
     #runSql() {
         if (this.elem.textarea) {
             const sql = this.elem.textarea.value.trim();
@@ -97,6 +132,12 @@ class DatabaseConnector {
         }
     }
 
+    /**
+     * Sends a SQL query to the WebSocket server for database processing.
+     * @private
+     * @param {string} query - The SQL query to be sent.
+     * @param {Array} queryParams - The parameters for the query (optional).
+     */
     #sendQuery(query, queryParams = []) {
         const message = {
             query,
@@ -107,11 +148,9 @@ class DatabaseConnector {
 
     /**
      * The fastest way to get the actual type of anything in JavaScript.
-     *
-     * {@link https://jsbench.me/ruks9jljcu/2 | See benchmarks}.
-     *
-     * @param {*} unknown Anything you wish to check the type of.
-     * @return {string|undefined} The type in lowercase of the unknown value passed in or undefined.
+     * See benchmarks: {@link https://jsbench.me/ruks9jljcu/2}
+     * @param {*} unknown - Anything you wish to check the type of.
+     * @return {string|undefined} - The type in lowercase of the unknown value passed in or undefined.
      */
     whatIs(unknown) {
         try {
@@ -121,4 +160,5 @@ class DatabaseConnector {
 
 }
 
+// Create an instance of DatabaseConnector when the script is executed.
 const databaseConnector = new DatabaseConnector();

@@ -1,5 +1,6 @@
 class ChatController {
 
+    // HTML elements used by the chat controller
     #elem = {
         chatApp: null,
         chatButton: null,
@@ -11,12 +12,17 @@ class ChatController {
         loginServer: null
     }
 
+    // User's username
     #username = '';
 
+    // WebSocket instance
     #ws = null;
 
+    /**
+     * Constructor for the ChatController class.
+     * Loads credentials from local storage and initializes HTML elements when the DOM is loaded.
+     */
     constructor() {
-        // Load credentials from local storage
         const savedName = localStorage.getItem('loginName');
         const savedServer = localStorage.getItem('loginServer');
 
@@ -25,6 +31,12 @@ class ChatController {
         });
     }
 
+    /**
+     * Connects HTML elements to corresponding properties and sets up event listeners.
+     * @private
+     * @param {string} name - The saved username from local storage.
+     * @param {string} ip - The saved server IP from local storage.
+     */
     #connectHtmlElements(name, ip) {
         this.#elem.chatApp = document.getElementById('chat-app');
         this.#elem.chatButton = document.getElementById('chat-button');
@@ -39,20 +51,16 @@ class ChatController {
             this.#username = name;
             this.#elem.loginName.value = name;
             this.#elem.loginServer.value = ip;
-            this.#elem.loginForm.style.display = 'none';
-            this.#elem.chatApp.style.display = 'block';
 
             const socket = new WebSocket(`ws://${ip}/ws?pageId=outsider`);
 
             socket.onmessage = this.#updateChats.bind(this);
-        
+
             socket.onerror = (err) => {
                 console.error('WebSocket Error:', err);
             };
 
             socket.onopen = () => {
-                this.#elem.loginForm.style.display = 'none';
-                this.#elem.chatApp.style.display = 'block';
                 this.#ws = socket;
                 this.getUpdates();
             };
@@ -62,6 +70,9 @@ class ChatController {
         this.#elem.chatButton.addEventListener('click', this.#sendMessage.bind(this));
     }
 
+    /**
+     * Sends a message to request updates from the WebSocket server.
+     */
     getUpdates() {
         const msgObject = {
             message: null,
@@ -74,6 +85,10 @@ class ChatController {
         this.#ws.send(JSON.stringify(msgObject));
     }
 
+    /**
+     * Saves user credentials to local storage and establishes a WebSocket connection.
+     * @private
+     */
     #saveCredentials() {
         const name = this.#elem.loginName.value.trim();
         const server = this.#elem.loginServer.value.trim();
@@ -81,9 +96,9 @@ class ChatController {
         if (!name || !server) {
             return;
         }
-    
+
         const socket = new WebSocket(`ws://${server}/ws?pageId=outsider`);
-        
+
         socket.onerror = (err) => {
             console.error('WebSocket Error:', err);
         };
@@ -98,6 +113,10 @@ class ChatController {
         };
     }
 
+    /**
+     * Sends a chat message to the WebSocket server.
+     * @private
+     */
     #sendMessage() {
         const msg = this.#elem.chatInput.value.trim();
         if (msg.length < 1) {
@@ -116,6 +135,11 @@ class ChatController {
         this.#elem.chatInput.value = '';
     }
 
+    /**
+     * Calculates a simple hash for a given string.
+     * @param {string} str - The string to be hashed.
+     * @returns {string} - The hash value.
+     */
     // https://gist.github.com/jlevy/c246006675becc446360a798e2b2d781
     simpleHash(str) {
         let hash = 0;
@@ -127,6 +151,11 @@ class ChatController {
         return new Uint32Array([hash])[0].toString(36);
     }
 
+    /**
+     * Updates the chat display with new messages.
+     * @private
+     * @param {MessageEvent} rawMessage - The raw WebSocket message event.
+     */
     #updateChats(rawMessage) {
         const history = JSON.parse(rawMessage.data).message;
         let newHtml = '';
@@ -136,19 +165,26 @@ class ChatController {
                     <div class="message">
                         ${record.message}
                     </div>
+                    <!--
                     <div class="from">
                         ${record.from}
                     </div>
+                    -->
                 </div>
             `;
         });
         this.#elem.chatDisplay.innerHTML = newHtml;
     }
 
+    /**
+     * Gets the hash of the current URL to identify the user uniquely.
+     * @returns {string} - The hash value.
+     */
     whoAmI() {
         return this.simpleHash(window.location.href);
     }
 
 }
 
+// Create an instance of ChatController when the script is executed.
 const chatController = new ChatController();

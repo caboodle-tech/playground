@@ -4,7 +4,8 @@
     "sqlite3": "^5.1.7"
   },
   "scripts": {
-    "watch": "node ./servers/web/web-server.js "
+    "play": "node ./servers/web/web-server.js",
+    "playground": "node ./servers/web/web-server.js"
   },
   "type": "module"
 }
