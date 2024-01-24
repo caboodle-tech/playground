@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@caboodle-tech/node-simple-server": "^4.2.1",
+    "@caboodle-tech/node-simple-server": "^4.2.2",
     "sqlite3": "^5.1.7"
   },
   "scripts": {

@@ -6,6 +6,7 @@
     <title>Cloud Chat Demo</title>
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/chat.css">
+    <script src="./js/chat.js"></script>
 </head>
 <body>
     <header>
@@ -33,16 +34,21 @@
             <p id="login-form">
                 <label>
                     Your real name:
-                    <input type="text" id="username">
+                    <input type="text" id="login-name">
                 </label>
                 <br><br>
                 <label>
                     IP Address & Port of Chat Server:
-                    <input type="text" id="server-ip" placeholder="127.0.0.1:5000">
+                    <input type="text" id="login-server">
                 </label>
                 <br><br>
-                <button>Save</button>
+                <button id="login-button">Save</button>
             </p>
+            <div id="chat-app" style="display: none;">
+                <div id="chat-display"></div>
+                <textarea id="chat-input"></textarea>
+                <button id="chat-button">Send</button>
+            </div>
         </div>
     </main>
     <footer>
